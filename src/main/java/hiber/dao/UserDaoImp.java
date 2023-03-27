@@ -13,29 +13,29 @@ import java.util.List;
 @Repository
 public class UserDaoImp implements UserDao {
 
-   @Autowired
-   private SessionFactory sessionFactory;
+    @Autowired
+    private SessionFactory sessionFactory;
 
-   @Override
-   public void add(User user) {
-      sessionFactory.getCurrentSession().save(user);
-   }
+    @Override
+    public void add(User user) {
+        sessionFactory.getCurrentSession().save(user);
+    }
 
-   @Override
-   @SuppressWarnings("unchecked")
-   public List<User> listUsers() {
-      TypedQuery<User> query=sessionFactory.getCurrentSession().createQuery("from User");
-      return query.getResultList();
-   }
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<User> listUsers() {
+        TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("from User");
+        return query.getResultList();
+    }
 
-   @Override
-   public User getUserByCar(Car car) {
-      String sql = "SELECT * FROM users JOIN cars ON users.id = cars.user_id " +
-              "WHERE cars.model = '" + car.getModel() + "' AND cars.series = '" + car.getSeries() + "'";
+    @Override
+    public User getUserByCar(Car car) {
+        String sql = "SELECT * FROM users JOIN cars ON users.id = cars.user_id " +
+                "WHERE cars.model = '" + car.getModel() + "' AND cars.series = '" + car.getSeries() + "'";
 
-      Query<User> query = sessionFactory.getCurrentSession().createNativeQuery(sql, User.class);
+        Query<User> query = sessionFactory.getCurrentSession().createNativeQuery(sql, User.class);
 
-      return query.uniqueResult();
-   }
+        return query.uniqueResult();
+    }
 
 }
