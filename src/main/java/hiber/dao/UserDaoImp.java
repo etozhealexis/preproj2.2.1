@@ -30,10 +30,10 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public User getUserByCar(Car car) {
-        String sql = "SELECT * FROM users JOIN cars ON users.id = cars.user_id " +
-                "WHERE cars.model = '" + car.getModel() + "' AND cars.series = '" + car.getSeries() + "'";
+        String hql = "FROM User user LEFT JOIN FETCH user.car car WHERE" +
+                " car.model = '" + car.getModel() + "' AND car.series = '" + car.getSeries() + "'";
 
-        Query<User> query = sessionFactory.getCurrentSession().createNativeQuery(sql, User.class);
+        Query<User> query = sessionFactory.getCurrentSession().createQuery(hql, User.class);
 
         return query.uniqueResult();
     }
